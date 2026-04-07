@@ -289,60 +289,18 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
   }
 
   async function handleSave() {
-  setSaving(true)
-
-  // Convertit les chaînes vides en null pour les champs numériques
-  const clean = (obj) => {
-    const result = {}
-    for (const [k, v] of Object.entries(obj)) {
-      if (v === '' || v === undefined) result[k] = null
-      else result[k] = v
-    }
-    return result
-  }
-
-  const payload = clean({
-    ...form,
-    formats_couleurs: JSON.stringify(form.formats_couleurs),
-    coating_lignes: JSON.stringify(form.coating_lignes),
-    imp_feuillets_couleur: JSON.stringify(form.imp_feuillets_couleur),
-    imp_couvertures: JSON.stringify(form.imp_couvertures),
-    imp_feuillet_texte: JSON.stringify(form.imp_feuillet_texte),
-    imp_index: JSON.stringify(form.imp_index),
-    imp_catalogue: JSON.stringify(form.imp_catalogue),
-  })
-
-  let result
-  if (ficheId) {
-    result = await supabase.from('fiches').update(payload).eq('id', ficheId)
-  } else {
-    result = await supabase.from('fiches').insert([payload])
-    if (!result.error) {
-      await fetch(`${process.env.REACT_APP_SUPABASE_URL}/functions/v1/notify`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.REACT_APP_SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify({
-          client: form.client,
-          num_dossier: form.num_dossier,
-          type_produit: form.type_produit,
-          date_creation: form.date_creation,
-        })
-      }).catch(() => {})
-    }
-  }
-
-  setSaving(false)
-  if (!result.error) {
-    setSaved(true)
-    setTimeout(() => setSaved(false), 3000)
-    if (onSaved) onSaved()
-  }
-}
     setSaving(true)
-    const payload = {
+
+    const clean = (obj) => {
+      const result = {}
+      for (const [k, v] of Object.entries(obj)) {
+        if (v === '' || v === undefined) result[k] = null
+        else result[k] = v
+      }
+      return result
+    }
+
+    const payload = clean({
       ...form,
       formats_couleurs: JSON.stringify(form.formats_couleurs),
       coating_lignes: JSON.stringify(form.coating_lignes),
@@ -351,14 +309,13 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
       imp_feuillet_texte: JSON.stringify(form.imp_feuillet_texte),
       imp_index: JSON.stringify(form.imp_index),
       imp_catalogue: JSON.stringify(form.imp_catalogue),
-    }
+    })
 
     let result
     if (ficheId) {
       result = await supabase.from('fiches').update(payload).eq('id', ficheId)
     } else {
       result = await supabase.from('fiches').insert([payload])
-      // Send email notification via Supabase Edge Function
       if (!result.error) {
         await fetch(`${process.env.REACT_APP_SUPABASE_URL}/functions/v1/notify`, {
           method: 'POST',
