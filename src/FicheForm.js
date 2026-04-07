@@ -317,12 +317,12 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
     } else {
       result = await supabase.from('fiches').insert([payload])
       if (!result.error) {
-        await fetch(`${process.env.REACT_APP_SUPABASE_URL}/functions/v1/notify`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.REACT_APP_SUPABASE_ANON_KEY}`
-          },
+        await fetch(`https://ttsheptdateqblcenxjb.supabase.co/functions/v1/notify`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0c2hlcHRkYXRlcWJsY2VueGpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MzU2MzAsImV4cCI6MjA5MTExMTYzMH0.chksYwsgFHx1l4_Pqvs3KLhCKCgrkSKajlTB0hIFrHk`
+  },
           body: JSON.stringify({
             client: form.client,
             num_dossier: form.num_dossier,
