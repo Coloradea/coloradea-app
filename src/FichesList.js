@@ -5,6 +5,7 @@ export default function FichesList({ onNew, onOpen, onLogout }) {
   const [fiches, setFiches] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [confirmDelete, setConfirmDelete] = useState(null)
 
   useEffect(() => {
     loadFiches()
@@ -18,6 +19,12 @@ export default function FichesList({ onNew, onOpen, onLogout }) {
       .order('created_at', { ascending: false })
     setFiches(data || [])
     setLoading(false)
+  }
+
+  async function handleDelete(id) {
+    await supabase.from('fiches').delete().eq('id', id)
+    setConfirmDelete(null)
+    loadFiches()
   }
 
   const filtered = fiches.filter(f =>
@@ -70,7 +77,17 @@ export default function FichesList({ onNew, onOpen, onLogout }) {
                   <td style={styles.td}>{f.date_creation || '—'}</td>
                   <td style={styles.td}>{f.date_livraison || '—'}</td>
                   <td style={styles.td}>
-                    <button onClick={() => onOpen(f.id)} style={styles.btnOpen}>Ouvrir</button>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button onClick={() => onOpen(f.id)} style={styles.btnOpen}>Ouvrir</button>
+                      {confirmDelete === f.id ? (
+                        <>
+                          <button onClick={() => handleDelete(f.id)} style={styles.btnConfirm}>Confirmer</button>
+                          <button onClick={() => setConfirmDelete(null)} style={styles.btnCancel}>Annuler</button>
+                        </>
+                      ) : (
+                        <button onClick={() => setConfirmDelete(f.id)} style={styles.btnDelete}>🗑</button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -112,6 +129,18 @@ const styles = {
   btnOpen: {
     background: '#185FA5', color: 'white', border: 'none',
     borderRadius: 4, padding: '5px 14px', fontSize: 12, cursor: 'pointer',
+  },
+  btnDelete: {
+    background: '#f5f5f5', color: '#c0392b', border: '1px solid #ddd',
+    borderRadius: 4, padding: '5px 10px', fontSize: 12, cursor: 'pointer',
+  },
+  btnConfirm: {
+    background: '#c0392b', color: 'white', border: 'none',
+    borderRadius: 4, padding: '5px 10px', fontSize: 12, cursor: 'pointer',
+  },
+  btnCancel: {
+    background: '#eee', color: '#444', border: 'none',
+    borderRadius: 4, padding: '5px 10px', fontSize: 12, cursor: 'pointer',
   },
   empty: { textAlign: 'center', color: '#999', padding: 48, fontSize: 15 },
 }
