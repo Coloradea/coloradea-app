@@ -3,7 +3,16 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 const TO_EMAIL = 'antoinecorre@colorboutik.com'
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
 serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
   const { client, num_dossier, type_produit, date_creation } = await req.json()
 
   const html = `
@@ -24,14 +33,17 @@ serve(async (req) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Coloradea <notifications@coloradea.com>',
+      from: 'onboarding@resend.dev',
       to: [TO_EMAIL],
       subject: `Nouvelle fiche — ${client || 'Client inconnu'} — ${num_dossier || ''}`,
       html,
     }),
   })
 
-  return new Response(JSON.stringify({ ok: res.ok }), {
-    headers: { 'Content-Type': 'application/json' },
+  const data = await res.json()
+  console.log('Resend response:', JSON.stringify(data))
+
+  return new Response(JSON.stringify({ ok: res.ok, data }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 })
