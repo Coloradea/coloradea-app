@@ -317,19 +317,19 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
     } else {
       result = await supabase.from('fiches').insert([payload])
       if (!result.error) {
-        await fetch(`https://ttsheptdateqblcenxjb.supabase.co/functions/v1/notify`, {
+        await fetch('https://api.resend.com/emails', {
   method: 'POST',
   headers: {
+    'Authorization': 'Bearer re_C5irwkPL_AYCiRRRquR9pX7YXbpSb9t4G',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0c2hlcHRkYXRlcWJsY2VueGpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MzU2MzAsImV4cCI6MjA5MTExMTYzMH0.chksYwsgFHx1l4_Pqvs3KLhCKCgrkSKajlTB0hIFrHk`
   },
-          body: JSON.stringify({
-            client: form.client,
-            num_dossier: form.num_dossier,
-            type_produit: form.type_produit,
-            date_creation: form.date_creation,
-          })
-        }).catch(() => {})
+  body: JSON.stringify({
+    from: 'onboarding@resend.dev',
+    to: ['antoinecorre@colorboutik.com'],
+    subject: `Nouvelle fiche — ${form.client || 'Client inconnu'} — ${form.num_dossier || ''}`,
+    html: `<h2>Nouvelle fiche de production — Coloradea</h2><p><strong>Client :</strong> ${form.client || '—'}</p><p><strong>N° dossier :</strong> ${form.num_dossier || '—'}</p><p><strong>Type :</strong> ${form.type_produit || '—'}</p><p><strong>Date :</strong> ${form.date_creation || '—'}</p>`,
+  }),
+}).catch(() => {})
       }
     }
 
