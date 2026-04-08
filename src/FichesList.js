@@ -7,9 +7,7 @@ export default function FichesList({ onNew, onOpen, onLogout, hideHeader }) {
   const [search, setSearch] = useState('')
   const [confirmDelete, setConfirmDelete] = useState(null)
 
-  useEffect(() => {
-    loadFiches()
-  }, [])
+  useEffect(() => { loadFiches() }, [])
 
   async function loadFiches() {
     setLoading(true)
@@ -36,18 +34,30 @@ export default function FichesList({ onNew, onOpen, onLogout, hideHeader }) {
 
   return (
     <div style={styles.page}>
-      {!hideHeader && <div style={styles.header}>}
-        <div style={styles.headerLeft}>
-          <span style={styles.brand}>COLORADEA</span>
-          <span style={styles.headerTitle}>Fiches de Production</span>
+      {!hideHeader && (
+        <div style={styles.header}>
+          <div style={styles.headerLeft}>
+            <span style={styles.brand}>COLORADEA</span>
+            <span style={styles.headerTitle}>Fiches de Production</span>
+          </div>
+          <div style={styles.headerRight}>
+            <button onClick={onNew} style={styles.btnNew}>+ Nouvelle fiche</button>
+            <button onClick={onLogout} style={styles.btnLogout}>Déconnexion</button>
+          </div>
         </div>
-        <div style={styles.headerRight}>
-          <button onClick={onNew} style={styles.btnNew}>+ Nouvelle fiche</button>
-          <button onClick={onLogout} style={styles.btnLogout}>Déconnexion</button>
-        </div>
-      </div>
+      )}
 
       <div style={styles.content}>
+        {!hideHeader && (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
+            <button onClick={onNew} style={{ ...styles.btnNew, display: 'none' }}></button>
+          </div>
+        )}
+        {hideHeader && (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
+            <button onClick={onNew} style={styles.btnNew}>+ Nouvelle fiche</button>
+          </div>
+        )}
         <input
           style={styles.search}
           placeholder="🔍  Rechercher par client, N° dossier, N° devis, désignation..."
