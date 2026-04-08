@@ -24,7 +24,8 @@ function easterCatholic(year) {
 }
 function getHolidays(year) {
   const h=new Set()
-  [[1,1],[2,1],[24,1],[1,5],[1,6],[15,8],[30,11],[1,12],[25,12],[26,12],[6,1],[3,5],[1,11],[8,12]].forEach(([d,m])=>h.add(`${year}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`))
+  const fixed=[[1,1],[2,1],[24,1],[1,5],[1,6],[15,8],[30,11],[1,12],[25,12],[26,12],[6,1],[3,5],[1,11],[8,12]]
+  fixed.forEach(function(x){ h.add(year+'-'+String(x[1]).padStart(2,'0')+'-'+String(x[0]).padStart(2,'0')) })
   const eo=easterOrthodox(year); [0,1,39,49,50].forEach(n=>h.add(dk(addDays(eo,n))))
   const ec=easterCatholic(year); [0,1,39,49].forEach(n=>h.add(dk(addDays(ec,n))))
   return h
