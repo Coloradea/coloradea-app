@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from './supabase'
 
-export default function FichesList({ onNew, onOpen, onLogout }) {
+export default function FichesList({ onNew, onOpen, onLogout, hideHeader }) {
   const [fiches, setFiches] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -36,7 +36,7 @@ export default function FichesList({ onNew, onOpen, onLogout }) {
 
   return (
     <div style={styles.page}>
-      <div style={styles.header}>
+      {!hideHeader && <div style={styles.header}>}
         <div style={styles.headerLeft}>
           <span style={styles.brand}>COLORADEA</span>
           <span style={styles.headerTitle}>Fiches de Production</span>
