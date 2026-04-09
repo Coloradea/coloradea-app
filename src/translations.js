@@ -49,6 +49,7 @@ export const translations = {
     num_devis: 'N° de devis',
     num_dossier: 'N° de dossier',
     date_creation: 'Date de création',
+    date_debut: 'Date de début',
     date_livraison: 'Date de livraison',
 
     // Désignation
@@ -214,6 +215,7 @@ export const translations = {
     num_devis: 'Nr. ofertă',
     num_dossier: 'Nr. dosar',
     date_creation: 'Data creării',
+    date_debut: 'Data de început',
     date_livraison: 'Data livrării',
 
     // Désignation
