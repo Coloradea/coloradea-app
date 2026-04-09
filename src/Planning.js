@@ -100,7 +100,7 @@ function JobModal({ job, fiches, onSave, onClose, onDelete }) {
           {/* Dates */}
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
             <div style={ms.field}>
-              <label style={ms.label}>{t.date_creation}</label>
+              <label style={ms.label}>{t.date_debut}</label>
               <input type="date" value={form.date_creation||''} onChange={e=>set('date_creation',e.target.value)} style={ms.input} />
             </div>
             <div style={ms.field}>
