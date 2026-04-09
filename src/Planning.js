@@ -173,7 +173,7 @@ export default function Planning({ onBack }) {
   useEffect(() => { loadJobs(); loadFiches() }, [])
 
   async function loadJobs() {
-    const { data } = await supabase.from('jobs').select('*').order('date_debut')
+    const { data } = await supabase.from('jobs').select('*').order('date_creation')
     setJobs(data||[])
   }
   async function loadFiches() {
