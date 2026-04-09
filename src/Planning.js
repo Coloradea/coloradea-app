@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabase'
+import { useLang, LangSwitcher } from './LangContext'
 
 const ATELIERS = ['Laboratoire','Coating 1','Coating 2','Coating 3','Application manuelle','Chipping','Massicots','Offset','Assemblage','Découpe','Perforation','Pose Rivet','Emballage']
 const PALETTE = ['#4A90D9','#27AE60','#E74C3C','#F39C12','#8E44AD','#16A085','#D35400','#2C3E50','#C0392B','#1ABC9C']
@@ -34,9 +35,10 @@ function isOff(d,holidays) { const w=d.getDay(); return w===0||w===6||holidays.h
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
 function JobModal({ job, fiches, onSave, onClose, onDelete }) {
+  const { t } = useLang()
   const [form, setForm] = useState({
     fiche_id:'', client:'', produit:'', type_produit:'',
-    atelier:ATELIERS[0], date_debut:dk(new Date()), date_fin:dk(new Date()),
+    atelier:ATELIERS[0], date_creation:dk(new Date()), date_livraison:dk(new Date()),
     couleur:PALETTE[0], note:'',
     ...job
   })
@@ -46,7 +48,13 @@ function JobModal({ job, fiches, onSave, onClose, onDelete }) {
     set('fiche_id', ficheId)
     if (ficheId) {
       const f = fiches.find(f=>f.id===ficheId)
-      if (f) { set('client',f.client||''); set('produit',f.designation||''); set('type_produit',f.type_produit||'') }
+      if (f) {
+        set('client',f.client||'')
+        set('produit',f.designation||'')
+        set('type_produit',f.type_produit||'')
+        if (f.date_creation) set('date_creation', f.date_creation)
+        if (f.date_livraison) set('date_livraison', f.date_livraison)
+      }
     }
   }
 
@@ -56,15 +64,15 @@ function JobModal({ job, fiches, onSave, onClose, onDelete }) {
     <div style={ms.overlay} onClick={e=>e.target===e.currentTarget&&onClose()}>
       <div style={ms.modal}>
         <div style={ms.header}>
-          <span style={ms.title}>{job?.id ? 'Modifier le job' : 'Planifier un job'}</span>
+          <span style={ms.title}>{job?.id ? t.modifier_job : t.planifier_job}</span>
           <button onClick={onClose} style={ms.closeBtn}>✕</button>
         </div>
         <div style={ms.body}>
           {/* Fiche */}
           <div style={ms.field}>
-            <label style={ms.label}>Fiche de production</label>
+            <label style={ms.label}>{t.fiche_production}</label>
             <select value={form.fiche_id||''} onChange={e=>handleFiche(e.target.value)} style={ms.input}>
-              <option value="">— Sans fiche —</option>
+              <option value="">{t.sans_fiche}</option>
               {fiches.map(f=>(
                 <option key={f.id} value={f.id}>{f.num_dossier||'—'} — {f.client||'—'} — {f.designation||'—'}</option>
               ))}
@@ -84,7 +92,7 @@ function JobModal({ job, fiches, onSave, onClose, onDelete }) {
           <hr style={{border:'none',borderTop:'1px solid #eee'}} />
           {/* Atelier */}
           <div style={ms.field}>
-            <label style={ms.label}>Atelier</label>
+            <label style={ms.label}>{t.atelier}</label>
             <select value={form.atelier} onChange={e=>set('atelier',e.target.value)} style={ms.input}>
               {ATELIERS.map(a=><option key={a}>{a}</option>)}
             </select>
@@ -92,12 +100,12 @@ function JobModal({ job, fiches, onSave, onClose, onDelete }) {
           {/* Dates */}
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
             <div style={ms.field}>
-              <label style={ms.label}>Date début</label>
-              <input type="date" value={form.date_debut} onChange={e=>set('date_debut',e.target.value)} style={ms.input} />
+              <label style={ms.label}>{t.date_creation}</label>
+              <input type="date" value={form.date_creation||''} onChange={e=>set('date_creation',e.target.value)} style={ms.input} />
             </div>
             <div style={ms.field}>
-              <label style={ms.label}>Date fin</label>
-              <input type="date" value={form.date_fin} onChange={e=>set('date_fin',e.target.value)} style={ms.input} />
+              <label style={ms.label}>{t.date_livraison}</label>
+              <input type="date" value={form.date_livraison||''} onChange={e=>set('date_livraison',e.target.value)} style={ms.input} />
             </div>
           </div>
           {/* Couleur */}
@@ -113,16 +121,16 @@ function JobModal({ job, fiches, onSave, onClose, onDelete }) {
           </div>
           {/* Note */}
           <div style={ms.field}>
-            <label style={ms.label}>Note</label>
+            <label style={ms.label}>{t.note}</label>
             <textarea value={form.note} onChange={e=>set('note',e.target.value)}
               style={{...ms.input,minHeight:56,resize:'vertical'}} />
           </div>
         </div>
         <div style={ms.footer}>
-          {job?.id && <button onClick={()=>onDelete(job.id)} style={ms.deleteBtn}>Supprimer</button>}
+          {job?.id && <button onClick={()=>onDelete(job.id)} style={ms.deleteBtn}>{t.delete}</button>}
           <div style={{flex:1}} />
-          <button onClick={onClose} style={ms.cancelBtn}>Annuler</button>
-          <button onClick={()=>onSave(form)} style={ms.saveBtn}>Enregistrer</button>
+          <button onClick={onClose} style={ms.cancelBtn}>{t.cancel}</button>
+          <button onClick={()=>onSave(form)} style={ms.saveBtn}>{t.save}</button>
         </div>
       </div>
     </div>
@@ -147,6 +155,7 @@ const ms = {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function Planning({ onBack }) {
+  const { t } = useLang()
   const [jobs, setJobs] = useState([])
   const [fiches, setFiches] = useState([])
   const [modal, setModal] = useState(null)
@@ -190,13 +199,13 @@ export default function Planning({ onBack }) {
   for (let i=0; i<numDays; i++) days.push(addDays(anchorDate,i))
 
   function getJobsForAtelier(atelier) {
-    return jobs.filter(j=>j.atelier===atelier&&j.date_debut&&j.date_fin)
+    return jobs.filter(j=>j.atelier===atelier&&j.date_creation&&j.date_livraison)
   }
 
   function computeLanes(atJobs) {
     const lanes=[]
     atJobs.forEach(job=>{
-      const s=parseDate(job.date_debut), e=parseDate(job.date_fin)
+      const s=parseDate(job.date_creation), e=parseDate(job.date_livraison)
       let placed=false
       for(const lane of lanes){
         if(!lane.some(j=>{ const js=parseDate(j.date_debut),je=parseDate(j.date_fin); return s<=je&&e>=js })){
@@ -214,13 +223,13 @@ export default function Planning({ onBack }) {
     if (!id) return
     const job = jobs.find(j=>j.id===id||j.id===parseInt(id))
     if (!job) return
-    const dur = daysBetween(parseDate(job.date_debut), parseDate(job.date_fin))
-    await supabase.from('jobs').update({atelier, date_debut:dayStr, date_fin:dk(addDays(parseDate(dayStr),dur))}).eq('id',job.id)
+    const dur = daysBetween(parseDate(job.date_creation), parseDate(job.date_livraison))
+    await supabase.from('jobs').update({atelier, date_creation:dayStr, date_livraison:dk(addDays(parseDate(dayStr),dur))}).eq('id',job.id)
     loadJobs()
   }
 
   function renderJobBar(job, laneIndex) {
-    const s=parseDate(job.date_debut), e=parseDate(job.date_fin)
+    const s=parseDate(job.date_creation), e=parseDate(job.date_livraison)
     const segs=[], hols=holidays.current
     let segStart=null
     days.forEach((d,i)=>{
@@ -250,7 +259,7 @@ export default function Planning({ onBack }) {
             whiteSpace:'nowrap', boxShadow:'0 1px 3px rgba(0,0,0,0.2)',
             zIndex:2, userSelect:'none',
           }}
-          title={`${job.client||''} — ${job.produit||''}\n${job.date_debut} → ${job.date_fin}`}
+          title={`${job.client||''} — ${job.produit||''}\n${job.date_creation} → ${job.date_livraison}`}
         >
           {isFirst && `${job.client||''}${job.produit?' — '+job.produit:''}`}
         </div>
@@ -273,14 +282,15 @@ export default function Planning({ onBack }) {
       {/* Topbar */}
       <div style={{background:'#1a1a2e',color:'white',height:50,display:'flex',alignItems:'center',padding:'0 20px',gap:8,flexShrink:0}}>
         <button onClick={onBack} style={{...navBtn,marginRight:8}}>← Retour</button>
-        <span style={{fontWeight:'bold',fontSize:14,letterSpacing:1}}>PLANNING DE PRODUCTION</span>
+        <span style={{fontWeight:'bold',fontSize:14,letterSpacing:1}}>{t.planning_title}</span>
         <div style={{flex:1}} />
         <button onClick={()=>setAnchorDate(d=>addDays(d,-14))} style={navBtn}>‹‹</button>
         <button onClick={()=>setAnchorDate(d=>addDays(d,-7))} style={navBtn}>‹</button>
-        <button onClick={()=>{const d=new Date();d.setDate(d.getDate()-7);setAnchorDate(d)}} style={{...navBtn,background:'#7A5F8A',border:'none'}}>Aujourd'hui</button>
+        <button onClick={()=>{const d=new Date();d.setDate(d.getDate()-7);setAnchorDate(d)}} style={{...navBtn,background:'#7A5F8A',border:'none'}}>{t.today}</button>
         <button onClick={()=>setAnchorDate(d=>addDays(d,7))} style={navBtn}>›</button>
         <button onClick={()=>setAnchorDate(d=>addDays(d,14))} style={navBtn}>››</button>
-        <button onClick={()=>setModal({job:null})} style={{background:'#7A5F8A',color:'white',border:'none',borderRadius:5,padding:'6px 16px',fontSize:13,fontWeight:'bold',cursor:'pointer',marginLeft:8}}>+ Planifier</button>
+        <LangSwitcher />
+        <button onClick={()=>setModal({job:null})} style={{background:'#7A5F8A',color:'white',border:'none',borderRadius:5,padding:'6px 16px',fontSize:13,fontWeight:'bold',cursor:'pointer',marginLeft:8}}>{t.new_job}</button>
       </div>
 
       {/* Grid */}
@@ -328,7 +338,7 @@ export default function Planning({ onBack }) {
                     return <div key={i} style={{width:DAY_W,flexShrink:0,height:'100%',background:isToday?'#eef2ff':off?'#f7f8fc':'white',borderRight:'1px solid #f0f0f0',cursor:'pointer'}}
                       onDragOver={e=>e.preventDefault()}
                       onDrop={e=>handleDrop(e,atelier,dStr)}
-                      onDoubleClick={()=>setModal({job:{atelier,date_debut:dStr,date_fin:dStr}})}
+                      onDoubleClick={()=>setModal({job:{atelier,date_creation:dStr,date_livraison:dStr}})}
                     />
                   })}
                   <div style={{position:'absolute',inset:0,pointerEvents:'none'}}>
