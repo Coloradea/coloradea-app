@@ -248,8 +248,8 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
 
   const f = form
 
-  const TYPE_OPTIONS_FR = ['Fandeck','Carte de couleur','Panneau','Application manuelle','Manuelle']
-  const TYPE_OPTIONS_RO = ['Fandeck','Carte de culori','Panou','Aplicare manuală','Manuală']
+  const TYPE_OPTIONS_FR = ['Fandeck','Carte de couleur','Panneau','Application manuelle']
+  const TYPE_OPTIONS_RO = ['Fandeck','Carte de culori','Panou','Aplicare manuală']
   const typeOptions = t === undefined || t.oui === 'Oui' ? TYPE_OPTIONS_FR : TYPE_OPTIONS_RO
 
   return (
