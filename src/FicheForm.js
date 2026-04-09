@@ -317,19 +317,19 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
     } else {
       result = await supabase.from('fiches').insert([payload])
       if (!result.error) {
-        await fetch('https://api.resend.com/emails', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer re_C5irwkPL_AYCiRRRquR9pX7YXbpSb9t4G',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    from: 'onboarding@resend.dev',
-    to: ['antoinecorre@colorboutik.com'],
-    subject: `Nouvelle fiche — ${form.client || 'Client inconnu'} — ${form.num_dossier || ''}`,
-    html: `<h2>Nouvelle fiche de production — Coloradea</h2><p><strong>Client :</strong> ${form.client || '—'}</p><p><strong>N° dossier :</strong> ${form.num_dossier || '—'}</p><p><strong>Type :</strong> ${form.type_produit || '—'}</p><p><strong>Date :</strong> ${form.date_creation || '—'}</p>`,
-  }),
-}).catch(() => {})
+        await fetch(`${process.env.REACT_APP_SUPABASE_URL}/functions/v1/notify`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.REACT_APP_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            client: form.client,
+            num_dossier: form.num_dossier,
+            type_produit: form.type_produit,
+            date_creation: form.date_creation,
+          })
+        }).catch(() => {})
       }
     }
 
@@ -376,7 +376,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
           <Grid cols={4} gap={12}>
             <Field label="N° de devis"><Input value={f.num_devis} onChange={v => set('num_devis', v)} /></Field>
             <Field label="N° de dossier"><Input value={f.num_dossier} onChange={v => set('num_dossier', v)} /></Field>
-            <Field label="Date de création"><Input type="date" value={f.date_creation} onChange={v => set('date_creation', v)} /></Field>
+            <Field label="Date de début"><Input type="date" value={f.date_creation} onChange={v => set('date_creation', v)} /></Field>
             <Field label="Date de livraison"><Input type="date" value={f.date_livraison} onChange={v => set('date_livraison', v)} /></Field>
           </Grid>
         </div>
