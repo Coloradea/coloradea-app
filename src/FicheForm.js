@@ -250,7 +250,8 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
 
   const TYPE_OPTIONS_FR = ['Fandeck','Carte de couleur','Panneau','Application manuelle']
   const TYPE_OPTIONS_RO = ['Fandeck','Carte de culori','Panou','Aplicare manuală']
-  const typeOptions = t === undefined || t.oui === 'Oui' ? TYPE_OPTIONS_FR : TYPE_OPTIONS_RO
+  const TYPE_OPTIONS_EN = ['Fandeck','Colour card','Panel','Manual application']
+  const typeOptions = t.oui === 'Oui' ? TYPE_OPTIONS_FR : t.oui === 'Yes' ? TYPE_OPTIONS_EN : TYPE_OPTIONS_RO
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', background: '#f0f0f0', minHeight: '100vh' }}>
