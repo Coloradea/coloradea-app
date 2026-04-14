@@ -85,14 +85,18 @@ function ImprimerieBloc({ title, data, onChange, hasPrestataire = true, hasCouve
       <SubHeader title={title} />
       <div style={{ padding: '10px 12px', background: 'white', border: '1px solid #eee', borderTop: 'none' }}>
         {hasPrestataire && (
-          <div style={{ display: 'flex', gap: 16, marginBottom: 8 }}>
-            <Check label={t.coloradea} checked={data.coloradea} onChange={v => set('coloradea', v)} />
-            <Check label={t.sous_traitant} checked={data.soustraitant} onChange={v => set('soustraitant', v)} />
-            {hasCouvertureOptions && <>
-              <Check label={t.format_net} checked={data.format_net} onChange={v => set('format_net', v)} />
-              <Check label={t.couverture_u} checked={data.couverture_u} onChange={v => set('couverture_u', v)} />
-            </>}
-          </div>
+          <>
+            <div style={{ display: 'flex', gap: 16, marginBottom: 8 }}>
+              <Check label={t.coloradea} checked={data.coloradea} onChange={v => set('coloradea', v)} />
+              <Check label={t.sous_traitant} checked={data.soustraitant} onChange={v => set('soustraitant', v)} />
+            </div>
+            {hasCouvertureOptions && (
+              <div style={{ display: 'flex', gap: 16, marginBottom: 8 }}>
+                <Check label={t.format_net} checked={data.format_net} onChange={v => set('format_net', v)} />
+                <Check label={t.couverture_u} checked={data.couverture_u} onChange={v => set('couverture_u', v)} />
+              </div>
+            )}
+          </>
         )}
         {isCouleur ? (
           <>
