@@ -52,6 +52,7 @@ function LangSwitcherDark() {
     <div style={{ display: 'flex', gap: 4 }}>
       <button onClick={() => toggleLang('fr')} style={{ background:'none',border:'none',cursor:'pointer',fontSize:20,opacity:lang==='fr'?1:0.3 }} title="Français">🇫🇷</button>
       <button onClick={() => toggleLang('ro')} style={{ background:'none',border:'none',cursor:'pointer',fontSize:20,opacity:lang==='ro'?1:0.3 }} title="Română">🇷🇴</button>
+      <button onClick={() => toggleLang('en')} style={{ background:'none',border:'none',cursor:'pointer',fontSize:20,opacity:lang==='en'?1:0.3 }} title="English">🇬🇧</button>
     </div>
   )
 }
