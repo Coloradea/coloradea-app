@@ -48,6 +48,16 @@ export function LangSwitcher() {
         }}
         title="Română"
       >🇷🇴</button>
+      <button
+        onClick={() => toggleLang('en')}
+        style={{
+          background: 'none', border: 'none', cursor: 'pointer',
+          fontSize: 20, opacity: lang === 'en' ? 1 : 0.4,
+          padding: '2px 4px', borderRadius: 4,
+          outline: lang === 'en' ? '2px solid white' : 'none',
+        }}
+        title="English"
+      >🇬🇧</button>
     </div>
   )
 }
