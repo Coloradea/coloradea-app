@@ -350,7 +350,8 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         </div>
 
         {/* 3. LABORATOIRE */}
-        <SectionHeader className='page-break' title={t.section_labo} color="#7A5F8A" />
+        <div style={{pageBreakBefore:'always'}}>
+        <SectionHeader title={t.section_labo} color="#7A5F8A" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
             <Field label={t.nb_couleurs_totales}><Input type="number" value={f.nb_couleurs_totales} onChange={v => set('nb_couleurs_totales', v)} /></Field>
@@ -430,8 +431,10 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
           </Field>
         </div>
 
+        </div>
         {/* 4. COATING */}
-        <SectionHeader className='page-break' title={t.section_coating} color="#185FA5" />
+        <div style={{pageBreakBefore:'always'}}>
+        <SectionHeader title={t.section_coating} color="#185FA5" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Field label={t.papier_pvc} style={{ marginBottom: 10 }}>
             <Select value={f.papier_coating} onChange={v => set('papier_coating', v)} options={PAPIER_OPTIONS} placeholder={t.select} />
@@ -470,8 +473,10 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
           </Field>
         </div>
 
+        </div>
         {/* 5. IMPRIMERIE */}
-        <SectionHeader className='page-break' title={t.section_imprimerie} color="#B94040" />
+        <div style={{pageBreakBefore:'always'}}>
+        <SectionHeader title={t.section_imprimerie} color="#B94040" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <ImprimerieBloc title={t.feuillets_couleur} data={f.imp_feuillets_couleur} onChange={v => setBlocFull('imp_feuillets_couleur', v)} hasPrestataire={false} isCouleur={true} t={t} />
           <Separator />
@@ -488,8 +493,10 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
           </Field>
         </div>
 
+        </div>
         {/* 6. FINITION */}
-        <SectionHeader className='page-break' title={t.section_finition} color="#2E7D5E" />
+        <div style={{pageBreakBefore:'always'}}>
+        <SectionHeader title={t.section_finition} color="#2E7D5E" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
             <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', minWidth: 80 }}>{t.decoupe}</div>
@@ -535,8 +542,10 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
           </Field>
         </div>
 
+        </div>
         {/* 7. EXPÉDITION */}
-        <SectionHeader className='page-break' title={t.section_expedition} color="#5A5A5A" />
+        <div style={{pageBreakBefore:'always'}}>
+        <SectionHeader title={t.section_expedition} color="#5A5A5A" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
             <Field label={t.nom_entreprise}><Input value={f.exp_entreprise} onChange={v => set('exp_entreprise', v)} /></Field>
@@ -555,6 +564,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
           </Field>
         </div>
 
+      </div>
       </div>
 
       <style>{`
