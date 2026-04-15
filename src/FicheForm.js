@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabase'
 import { useLang } from './LangContext'
 
-function SectionHeader({ title, color }) {
+function SectionHeader({ title, color, className }) {
   return (
-    <div style={{
+    <div className={className} style={{
       background: color, color: 'white', padding: '8px 14px',
       fontSize: 12, fontWeight: 'bold', letterSpacing: 1,
       textTransform: 'uppercase', marginTop: 16, borderRadius: '4px 4px 0 0'
@@ -177,9 +177,10 @@ function initState() {
     nb_ft_aspect: '', nb_ft_transparents: '', nb_ft_couleurs: '', obs_designation: '',
     nb_couleurs_totales: '', papier_feuillet_couleur: '',
     modele_dispo_oui: false, modele_dispo_non: false, decoupe_vif_oui: false, decoupe_vif_non: false,
-    fin_mat: false, fin_satin: false, fin_brillant: false, fin_metallise: false,
+    fin_mat: false, fin_satin: false, fin_brillant: false, fin_metallise: false, fin_velours: false,
+    papier_fin_mat: false, papier_fin_satin: false, papier_fin_brillant: false,
     degre_brillance: '', contretypage_xml: false, contretypage_std: false,
-    formats_couleurs: Array(16).fill(null).map(() => ({ l: '', h: '', nb: '' })),
+    formats_couleurs: Array(16).fill(null).map(() => ({ l: '', h: '', nb: '', pages: '' })),
     notes_labo: '', papier_coating: '', laize_papier: '',
     coat_fin_mat: false, coat_fin_satin: false, coat_fin_brillant: false,
     nouvel_outil: false, outil_existant: '',
@@ -349,13 +350,18 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         </div>
 
         {/* 3. LABORATOIRE */}
-        <SectionHeader title={t.section_labo} color="#7A5F8A" />
+        <SectionHeader className='page-break' title={t.section_labo} color="#7A5F8A" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
             <Field label={t.nb_couleurs_totales}><Input type="number" value={f.nb_couleurs_totales} onChange={v => set('nb_couleurs_totales', v)} /></Field>
             <Field label={t.papier_feuillet}>
-              <Select value={f.papier_feuillet_couleur} onChange={v => set('papier_feuillet_couleur', v)} options={PAPIER_PVC_OPTIONS} placeholder={t.select} />
+              <Select value={f.papier_feuillet_couleur} onChange={v => set('papier_feuillet_couleur', v)} options={PAPIER_OPTIONS} placeholder={t.select} />
             </Field>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center', paddingTop: 18 }}>
+              <Check label={t.mat} checked={f.papier_fin_mat} onChange={v => set('papier_fin_mat', v)} />
+              <Check label={t.satin} checked={f.papier_fin_satin} onChange={v => set('papier_fin_satin', v)} />
+              <Check label={t.brillant} checked={f.papier_fin_brillant} onChange={v => set('papier_fin_brillant', v)} />
+            </div>
           </Grid>
           <div style={{ display: 'flex', gap: 32, marginBottom: 10 }}>
             <div>
@@ -374,12 +380,13 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
             </div>
           </div>
           <div style={{ marginBottom: 10 }}>
-            <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 4 }}>{t.finition}</div>
+            <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 4 }}>{t.finition_couleur || 'Finition couleur'}</div>
             <div style={{ display: 'flex', gap: 16 }}>
               <Check label={t.mat} checked={f.fin_mat} onChange={v => set('fin_mat', v)} />
               <Check label={t.satin} checked={f.fin_satin} onChange={v => set('fin_satin', v)} />
               <Check label={t.brillant} checked={f.fin_brillant} onChange={v => set('fin_brillant', v)} />
               <Check label={t.metallise} checked={f.fin_metallise} onChange={v => set('fin_metallise', v)} />
+              <Check label={t.velours || 'Velours'} checked={f.fin_velours} onChange={v => set('fin_velours', v)} />
             </div>
           </div>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
@@ -397,14 +404,23 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
             {f.formats_couleurs.map((fc, i) => (
               <div key={i} style={{ border: '1px solid #eee', borderRadius: 4, padding: '6px 8px' }}>
                 <div style={{ fontSize: 10, color: '#888', marginBottom: 4 }}>Format {i+1}</div>
-                <div style={{ display: 'flex', gap: 4, alignItems: 'center', flexWrap: 'wrap' }}>
-                  <Input type="number" value={fc.l} placeholder="L" style={{ width: 46 }}
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center', flexWrap: 'wrap', marginBottom: 4 }}>
+                  <Input type="number" value={fc.l} placeholder="L" style={{ width: 40 }}
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], l: v}; set('formats_couleurs', arr) }} />
                   <span style={{ fontSize: 11 }}>×</span>
-                  <Input type="number" value={fc.h} placeholder="H" style={{ width: 46 }}
+                  <Input type="number" value={fc.h} placeholder="H" style={{ width: 40 }}
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], h: v}; set('formats_couleurs', arr) }} />
-                  <Input type="number" value={fc.nb} placeholder="nb" style={{ width: 38 }}
+                  <span style={{ fontSize: 10, color: '#888' }}>mm</span>
+                </div>
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 4 }}>
+                  <Input type="number" value={fc.nb} placeholder="nb" style={{ width: 40 }}
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], nb: v}; set('formats_couleurs', arr) }} />
+                  <span style={{ fontSize: 10, color: '#888' }}>teintes</span>
+                </div>
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                  <Input type="number" value={fc.pages} placeholder="nb" style={{ width: 40 }}
+                    onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], pages: v}; set('formats_couleurs', arr) }} />
+                  <span style={{ fontSize: 10, color: '#888' }}>pages couleur</span>
                 </div>
               </div>
             ))}
@@ -415,7 +431,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         </div>
 
         {/* 4. COATING */}
-        <SectionHeader title={t.section_coating} color="#185FA5" />
+        <SectionHeader className='page-break' title={t.section_coating} color="#185FA5" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Field label={t.papier_pvc} style={{ marginBottom: 10 }}>
             <Select value={f.papier_coating} onChange={v => set('papier_coating', v)} options={PAPIER_OPTIONS} placeholder={t.select} />
@@ -455,7 +471,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         </div>
 
         {/* 5. IMPRIMERIE */}
-        <SectionHeader title={t.section_imprimerie} color="#B94040" />
+        <SectionHeader className='page-break' title={t.section_imprimerie} color="#B94040" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <ImprimerieBloc title={t.feuillets_couleur} data={f.imp_feuillets_couleur} onChange={v => setBlocFull('imp_feuillets_couleur', v)} hasPrestataire={false} isCouleur={true} t={t} />
           <Separator />
@@ -473,7 +489,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         </div>
 
         {/* 6. FINITION */}
-        <SectionHeader title={t.section_finition} color="#2E7D5E" />
+        <SectionHeader className='page-break' title={t.section_finition} color="#2E7D5E" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
             <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', minWidth: 80 }}>{t.decoupe}</div>
@@ -520,7 +536,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         </div>
 
         {/* 7. EXPÉDITION */}
-        <SectionHeader title={t.section_expedition} color="#5A5A5A" />
+        <SectionHeader className='page-break' title={t.section_expedition} color="#5A5A5A" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
             <Field label={t.nom_entreprise}><Input value={f.exp_entreprise} onChange={v => set('exp_entreprise', v)} /></Field>
