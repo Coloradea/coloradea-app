@@ -363,13 +363,15 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
             <Field label={t.nb_couleurs_totales}><Input type="number" value={f.nb_couleurs_totales} onChange={v => set('nb_couleurs_totales', v)} /></Field>
-            <Field label={t.papier_feuillet}>
-              <Select value={f.papier_feuillet_couleur} onChange={v => set('papier_feuillet_couleur', v)} options={PAPIER_OPTIONS} placeholder={t.select} />
-            </Field>
-            <div style={{ display: 'flex', gap: 12, alignItems: 'center', paddingTop: 18 }}>
-              <Check label={t.mat} checked={f.papier_fin_mat} onChange={v => set('papier_fin_mat', v)} />
-              <Check label={t.satin} checked={f.papier_fin_satin} onChange={v => set('papier_fin_satin', v)} />
-              <Check label={t.brillant} checked={f.papier_fin_brillant} onChange={v => set('papier_fin_brillant', v)} />
+            <div>
+              <Field label={t.papier_feuillet}>
+                <Select value={f.papier_feuillet_couleur} onChange={v => set('papier_feuillet_couleur', v)} options={PAPIER_OPTIONS} placeholder={t.select} />
+              </Field>
+              <div style={{ display: 'flex', gap: 12, marginTop: 6 }}>
+                <Check label={t.mat} checked={f.papier_fin_mat} onChange={v => set('papier_fin_mat', v)} />
+                <Check label={t.satin} checked={f.papier_fin_satin} onChange={v => set('papier_fin_satin', v)} />
+                <Check label={t.brillant} checked={f.papier_fin_brillant} onChange={v => set('papier_fin_brillant', v)} />
+              </div>
             </div>
           </Grid>
           <div style={{ display: 'flex', gap: 32, marginBottom: 10 }}>
