@@ -155,6 +155,7 @@ export const translations = {
 
     // Expédition
     nom_entreprise: "Nom de l'entreprise",
+    service: 'Service',
     contact: 'Contact',
     telephone: 'Téléphone',
     email: 'Email',
@@ -331,6 +332,7 @@ export const translations = {
 
     // Expédition
     nom_entreprise: 'Numele companiei',
+    service: 'Serviciu',
     contact: 'Contact',
     telephone: 'Telefon',
     email: 'Email',
@@ -507,6 +509,7 @@ export const translations = {
 
     // Expédition
     nom_entreprise: 'Company name',
+    service: 'Department',
     contact: 'Contact',
     telephone: 'Phone',
     email: 'Email',
