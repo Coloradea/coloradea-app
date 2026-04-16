@@ -437,6 +437,11 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], nb: v}; set('formats_couleurs', arr) }} />
                   <span style={{ fontSize: 10, color: '#888' }}>teintes</span>
                 </div>
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 4 }}>
+                  <Input type="number" value={fc.teintes_page} placeholder="nb" style={{ width: 40 }}
+                    onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], teintes_page: v}; set('formats_couleurs', arr) }} />
+                  <span style={{ fontSize: 10, color: '#888' }}>teintes par page</span>
+                </div>
                 <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
                   <Input type="number" value={fc.pages} placeholder="nb" style={{ width: 40 }}
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], pages: v}; set('formats_couleurs', arr) }} />
