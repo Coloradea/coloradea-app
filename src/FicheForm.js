@@ -116,8 +116,10 @@ function ImprimerieBloc({ title, data, onChange, hasPrestataire = true, hasCouve
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 4 }}>
                   <Check label={t.recto_sur_teinte || 'Recto sur la teinte'} checked={data.imp_recto_sur} onChange={v => set('imp_recto_sur', v)} />
                   <Check label={t.recto_sous_teinte || 'Recto sous la teinte'} checked={data.imp_recto_sous} onChange={v => set('imp_recto_sous', v)} />
-                  <Check label={t.recto_verso} checked={data.imp_rv} onChange={v => set('imp_rv', v)} />
-                  <Check label={t.verso} checked={data.imp_verso} onChange={v => set('imp_verso', v)} />
+                  <div style={{display:'flex',gap:10,flexWrap:'nowrap'}}>
+                    <Check label={t.recto_verso} checked={data.imp_rv} onChange={v => set('imp_rv', v)} />
+                    <Check label={t.verso} checked={data.imp_verso} onChange={v => set('imp_verso', v)} />
+                  </div>
                 </div>
               </Field>
             </div>
@@ -151,8 +153,10 @@ function ImprimerieBloc({ title, data, onChange, hasPrestataire = true, hasCouve
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', paddingTop: 4 }}>
                   <Check label={t.recto_sur_teinte || 'Recto sur la teinte'} checked={data.imp_recto_sur} onChange={v => set('imp_recto_sur', v)} />
                   <Check label={t.recto_sous_teinte || 'Recto sous la teinte'} checked={data.imp_recto_sous} onChange={v => set('imp_recto_sous', v)} />
-                  <Check label={t.recto_verso} checked={data.imp_rv} onChange={v => set('imp_rv', v)} />
-                  <Check label={t.verso} checked={data.imp_verso} onChange={v => set('imp_verso', v)} />
+                  <div style={{display:'flex',gap:10,flexWrap:'nowrap'}}>
+                    <Check label={t.recto_verso} checked={data.imp_rv} onChange={v => set('imp_rv', v)} />
+                    <Check label={t.verso} checked={data.imp_verso} onChange={v => set('imp_verso', v)} />
+                  </div>
                 </div>
               </Field>
             </div>
@@ -475,7 +479,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
             <Grid key={i} cols={4} gap={10} style={{ marginBottom: 8 }}>
               <Field label={t.nb_coul_page}><Input type="number" value={cl.nb_coul} onChange={v => { const arr=[...f.coating_lignes]; arr[i]={...arr[i],nb_coul:v}; set('coating_lignes',arr) }} /></Field>
               <Field label={t.hauteur_bande}><Input type="number" value={cl.hauteur} onChange={v => { const arr=[...f.coating_lignes]; arr[i]={...arr[i],hauteur:v}; set('coating_lignes',arr) }} /></Field>
-              <Field label={t.espace_teintes || 'Espace entre les teintes (mm)'}><Input type="number" value={cl.espace_teintes} onChange={v => { const arr=[...f.coating_lignes]; arr[i]={...arr[i],espace_teintes:v}; set('coating_lignes',arr) }} /></Field>
+              <Field label={t.espace_teintes || 'Espace teintes (mm)'}><Input type="number" value={cl.espace_teintes} onChange={v => { const arr=[...f.coating_lignes]; arr[i]={...arr[i],espace_teintes:v}; set('coating_lignes',arr) }} /></Field>
               <Field label={t.nb_pages}><Input type="number" value={cl.nb_pages} onChange={v => { const arr=[...f.coating_lignes]; arr[i]={...arr[i],nb_pages:v}; set('coating_lignes',arr) }} /></Field>
             </Grid>
           ))}
