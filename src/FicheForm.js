@@ -435,7 +435,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
                 <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 4 }}>
                   <Input type="number" value={fc.nb} placeholder="nb" style={{ width: 40 }}
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], nb: v}; set('formats_couleurs', arr) }} />
-                  <span style={{ fontSize: 10, color: '#888' }}>teintes</span>
+                  <span style={{ fontSize: 10, color: '#888' }}>{t.teintes || 'teintes'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 4 }}>
                   <Input type="number" value={fc.teintes_page} placeholder="nb" style={{ width: 40 }}
@@ -445,7 +445,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
                 <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
                   <Input type="number" value={fc.pages} placeholder="nb" style={{ width: 40 }}
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], pages: v}; set('formats_couleurs', arr) }} />
-                  <span style={{ fontSize: 10, color: '#888' }}>pages couleur</span>
+                  <span style={{ fontSize: 10, color: '#888' }}>{t.pages_couleur || 'pages couleur'}</span>
                 </div>
               </div>
             ))}
