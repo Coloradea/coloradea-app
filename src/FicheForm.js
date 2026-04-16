@@ -188,7 +188,7 @@ function initState() {
     fin_mat: false, fin_satin: false, fin_brillant: false, fin_metallise: false, fin_velours: false,
     papier_fin_mat: false, papier_fin_satin: false, papier_fin_brillant: false,
     degre_brillance: '', contretypage_xml: false, contretypage_std: false,
-    formats_couleurs: Array(16).fill(null).map(() => ({ l: '', h: '', nb: '', pages: '' })),
+    formats_couleurs: Array(8).fill(null).map(() => ({ l: '', h: '', nb: '', teintes_page: '', pages: '' })),
     notes_labo: '', papier_coating: '', laize_papier: '',
     coat_fin_mat: false, coat_fin_satin: false, coat_fin_brillant: false,
     nouvel_outil: false, outil_existant: '',
