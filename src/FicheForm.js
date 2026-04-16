@@ -198,7 +198,7 @@ function initState() {
     decoupe_format_net: false, decoupe_forme: false, perf_avec: false, perf_sans: false,
     rivet_argent: false, rivet_noir: false, rivet_or: false, rivet_plast_blanc: false, rivet_plast_noir: false,
     emb_film: false, emb_film_ex: '', emb_kraft: false, emb_kraft_ex: '', obs_finition: '',
-    exp_entreprise: '', exp_contact: '', exp_tel: '', exp_email: '',
+    exp_entreprise: '', exp_service: '', exp_contact: '', exp_tel: '', exp_email: '',
     exp_adr1: '', exp_adr2: '', exp_adr3: '', exp_cp: '', exp_ville: '', exp_pays: '', obs_expedition: '',
   }
 }
@@ -582,17 +582,20 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
         <div style={{pageBreakBefore:'always'}}>
         <SectionHeader title={t.section_expedition} color="#5A5A5A" />
         <div style={{ padding: '12px', border: '1px solid #ddd', borderTop: 'none' }}>
+          <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
+            <Field label={t.nom_entreprise} style={{ flex: 1 }}><Input value={f.exp_entreprise} onChange={v => set('exp_entreprise', v)} /></Field>
+            <Field label={t.service || 'Service'} style={{ flex: 1 }}><Input value={f.exp_service} onChange={v => set('exp_service', v)} /></Field>
+          </div>
           <Grid cols={2} gap={12} style={{ marginBottom: 10 }}>
-            <Field label={t.nom_entreprise}><Input value={f.exp_entreprise} onChange={v => set('exp_entreprise', v)} /></Field>
-            <Field label={t.contact}><Input value={f.exp_contact} onChange={v => set('exp_contact', v)} /></Field>
-            <Field label={t.telephone}><Input value={f.exp_tel} onChange={v => set('exp_tel', v)} /></Field>
-            <Field label={t.email}><Input type="email" value={f.exp_email} onChange={v => set('exp_email', v)} /></Field>
             <Field label={t.adresse1}><Input value={f.exp_adr1} onChange={v => set('exp_adr1', v)} /></Field>
             <Field label={t.adresse2}><Input value={f.exp_adr2} onChange={v => set('exp_adr2', v)} /></Field>
             <Field label={t.adresse3}><Input value={f.exp_adr3} onChange={v => set('exp_adr3', v)} /></Field>
             <Field label={t.code_postal}><Input value={f.exp_cp} onChange={v => set('exp_cp', v)} /></Field>
             <Field label={t.ville}><Input value={f.exp_ville} onChange={v => set('exp_ville', v)} /></Field>
             <Field label={t.pays}><Input value={f.exp_pays} onChange={v => set('exp_pays', v)} /></Field>
+            <Field label={t.contact}><Input value={f.exp_contact} onChange={v => set('exp_contact', v)} /></Field>
+            <Field label={t.telephone}><Input value={f.exp_tel} onChange={v => set('exp_tel', v)} /></Field>
+            <Field label={t.email}><Input type="email" value={f.exp_email} onChange={v => set('exp_email', v)} /></Field>
           </Grid>
           <Field label={t.observations}>
             <Textarea value={f.obs_expedition} onChange={v => set('obs_expedition', v)} placeholder={t.info_complementaires} />
