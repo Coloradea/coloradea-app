@@ -39,10 +39,10 @@ export const translations = {
     // FicheForm sections
     section_identification: '1 — Identification du dossier',
     section_designation: '2 — Désignation & Client',
-    section_labo: '3 — Atelier — Laboratoire',
-    section_coating: '4 — Atelier — Coating',
-    section_imprimerie: '5 — Atelier — Imprimerie',
-    section_finition: '6 — Atelier — Finition',
+    section_labo: '3 — Laboratoire',
+    section_coating: '4 — Coating',
+    section_imprimerie: '5 — Imprimerie',
+    section_finition: '6 — Finition',
     section_expedition: '7 — Expédition',
 
     // Identification
@@ -128,7 +128,7 @@ export const translations = {
     recto_verso: 'Recto/Verso',
     recto_sur_teinte: 'Recto sur la teinte',
     recto_sous_teinte: 'Recto sous la teinte',
-    espace_teintes: 'Espace entre les teintes (mm)',
+    espace_teintes: 'Espace teintes (mm)',
     microns: 'microns',
     cmyk: 'CMYK',
     pantone: 'Pantone :',
@@ -212,10 +212,10 @@ export const translations = {
     // FicheForm sections
     section_identification: '1 — Identificarea dosarului',
     section_designation: '2 — Denumire & Client',
-    section_labo: '3 — Atelier — Laborator',
-    section_coating: '4 — Atelier — Coating',
-    section_imprimerie: '5 — Atelier — Tipografie',
-    section_finition: '6 — Atelier — Finisare',
+    section_labo: '3 — Laborator',
+    section_coating: '4 — Coating',
+    section_imprimerie: '5 — Tipografie',
+    section_finition: '6 — Finisare',
     section_expedition: '7 — Expediere',
 
     // Identification
@@ -301,7 +301,7 @@ export const translations = {
     recto_verso: 'Față/Verso',
     recto_sur_teinte: 'Recto pe culoare',
     recto_sous_teinte: 'Recto sub culoare',
-    espace_teintes: 'Spațiu între culori (mm)',
+    espace_teintes: 'Spațiu culori (mm)',
     microns: 'microni',
     cmyk: 'CMYK',
     pantone: 'Pantone :',
@@ -385,10 +385,10 @@ export const translations = {
     // FicheForm sections
     section_identification: '1 — File Identification',
     section_designation: '2 — Designation & Client',
-    section_labo: '3 — Workshop — Laboratory',
-    section_coating: '4 — Workshop — Coating',
-    section_imprimerie: '5 — Workshop — Printing',
-    section_finition: '6 — Workshop — Finishing',
+    section_labo: '3 — Laboratory',
+    section_coating: '4 — Coating',
+    section_imprimerie: '5 — Printing',
+    section_finition: '6 — Finishing',
     section_expedition: '7 — Shipping',
 
     // Identification
@@ -422,8 +422,8 @@ export const translations = {
     info_complementaires: 'Additional information...',
 
     // Labo
-    nb_couleurs_totales: 'Total number of colours',
-    papier_feuillet: 'Paper / PVC for colour sheet',
+    nb_couleurs_totales: 'Total number of colors',
+    papier_feuillet: 'Paper / PVC for color sheet',
     modele_dispo: 'Model available',
     decoupe_vif: 'Bleed cut',
     oui: 'Yes',
@@ -434,13 +434,13 @@ export const translations = {
     brillant: 'Gloss',
     metallise: 'Metallic',
     velours: 'Velvet',
-    finition_couleur: 'Colour finish',
-    papier_feuillet: 'Paper for colour sheet',
+    finition_couleur: 'Color finish',
+    papier_feuillet: 'Paper for color sheet',
     degre_brillance: 'Gloss level',
-    contretypage: 'Colour matching',
+    contretypage: 'Color matching',
     base_xml: 'XML base',
-    standard_couleur: 'Colour standard',
-    formats_couleurs: 'Colour formats',
+    standard_couleur: 'Color standard',
+    formats_couleurs: 'Color formats',
     notes_labo: 'Laboratory notes',
     formules_ref: 'Formulas, references, technical notes...',
 
@@ -455,7 +455,7 @@ export const translations = {
     nb_pages: 'Number of pages',
 
     // Imprimerie
-    feuillets_couleur: 'Colour sheets',
+    feuillets_couleur: 'Color sheets',
     couvertures: 'Covers',
     feuillet_texte: 'Text sheets',
     index: 'Index',
@@ -464,7 +464,7 @@ export const translations = {
     format_net: 'Net format',
     coloradea: 'Coloradea',
     sous_traitant: 'Subcontractor',
-    couleur: 'Colour',
+    couleur: 'Color',
     noir: 'Black',
     noir_alu: 'Black + Alu',
     alu: 'Alu',
@@ -472,9 +472,9 @@ export const translations = {
     recto: 'Front',
     verso: 'Back',
     recto_verso: 'Front/Back',
-    recto_sur_teinte: 'Front on colour',
-    recto_sous_teinte: 'Front under colour',
-    espace_teintes: 'Space between colours (mm)',
+    recto_sur_teinte: 'Front on color',
+    recto_sous_teinte: 'Front under color',
+    espace_teintes: 'Space between colors (mm)',
     microns: 'microns',
     cmyk: 'CMYK',
     pantone: 'Pantone:',
