@@ -222,6 +222,11 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
     if (data) {
       const parsed = { ...data }
       if (typeof parsed.formats_couleurs === 'string') parsed.formats_couleurs = JSON.parse(parsed.formats_couleurs)
+      // Force 8 formats
+      if (Array.isArray(parsed.formats_couleurs)) {
+        while (parsed.formats_couleurs.length < 8) parsed.formats_couleurs.push({ l: '', h: '', nb: '', teintes_page: '', pages: '' })
+        parsed.formats_couleurs = parsed.formats_couleurs.slice(0, 8)
+      }
       if (typeof parsed.coating_lignes === 'string') parsed.coating_lignes = JSON.parse(parsed.coating_lignes)
       if (typeof parsed.imp_feuillets_couleur === 'string') parsed.imp_feuillets_couleur = JSON.parse(parsed.imp_feuillets_couleur)
       if (typeof parsed.imp_couvertures === 'string') parsed.imp_couvertures = JSON.parse(parsed.imp_couvertures)
