@@ -159,8 +159,8 @@ export default function Planning({ onBack }) {
   const [jobs, setJobs] = useState([])
   const [fiches, setFiches] = useState([])
   const [modal, setModal] = useState(null)
-  const [anchorDate, setAnchorDate] = useState(() => { const d=new Date(); d.setDate(d.getDate()-7); return d })
-  const numDays = 60
+  const [anchorDate, setAnchorDate] = useState(() => { const d=new Date(); d.setDate(d.getDate()-30); return d })
+  const numDays = 365
   const gridRef = useRef()
   const nameRef = useRef()
   const holidays = useRef(new Set())
