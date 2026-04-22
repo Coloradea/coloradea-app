@@ -188,6 +188,8 @@ function initState() {
     modele_dispo_oui: false, modele_dispo_non: false, decoupe_vif_oui: false, decoupe_vif_non: false,
     fin_mat: false, fin_satin: false, fin_brillant: false, fin_metallise: false, fin_velours: false,
     fin_water_base: false, fin_grain: false, fin_grain_pct: '',
+    ctrl_cielab: false, ctrl_cmc: false, ctrl_autre: false,
+    bande_peinture_blanche: false, bande_vernis_transparent: false, bande_sans: false,
     papier_fin_mat: false, papier_fin_satin: false, papier_fin_brillant: false,
     degre_brillance: '', contretypage_xml: false, contretypage_std: false,
     formats_couleurs: Array(8).fill(null).map(() => ({ l: '', h: '', nb: '', teintes_page: '', pages: '' })),
@@ -416,6 +418,14 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
                 <Check label={t.non} checked={f.decoupe_vif_non} onChange={v => set('decoupe_vif_non', v)} />
               </div>
             </div>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 4 }}>Bande de compensation</div>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <Check label="Peinture blanche" checked={f.bande_peinture_blanche} onChange={v => set('bande_peinture_blanche', v)} />
+                <Check label="Vernis transparent" checked={f.bande_vernis_transparent} onChange={v => set('bande_vernis_transparent', v)} />
+                <Check label="Sans bande" checked={f.bande_sans} onChange={v => set('bande_sans', v)} />
+              </div>
+            </div>
           </div>
           <div style={{ marginBottom: 10 }}>
             <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 4 }}>{t.finition_couleur || 'Finition couleur'}</div>
@@ -446,6 +456,14 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
               </div>
             </div>
           </Grid>
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 4 }}>Paramètre de contrôle</div>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <Check label="CieLab" checked={f.ctrl_cielab} onChange={v => set('ctrl_cielab', v)} />
+              <Check label="CMC" checked={f.ctrl_cmc} onChange={v => set('ctrl_cmc', v)} />
+              <Check label="Autre" checked={f.ctrl_autre} onChange={v => set('ctrl_autre', v)} />
+            </div>
+          </div>
           <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 6 }}>{t.formats_couleurs}</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 10 }}>
             {f.formats_couleurs.map((fc, i) => (
