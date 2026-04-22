@@ -193,7 +193,7 @@ function initState() {
     papier_fin_mat: false, papier_fin_satin: false, papier_fin_brillant: false,
     degre_brillance: '', contretypage_xml: false, contretypage_std: false,
     formats_couleurs: Array(8).fill(null).map(() => ({ l: '', h: '', nb: '', kg_couleur: '' })),
-    notes_labo: '', papier_coating: '', laize_papier: '',
+    notes_labo: '', papier_coating: '', laize_papier: '', nb_passages: '', longueur_coating: '',
     coat_fin_mat: false, coat_fin_satin: false, coat_fin_brillant: false,
     nouvel_outil: false, outil_existant: '',
     coating_lignes: Array(8).fill(null).map(() => ({ nb_coul: '', hauteur: '', espace_teintes: '', nb_pages: '' })),
@@ -507,6 +507,16 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
             <Field label={t.laize_papier} style={{ minWidth: 140 }}>
               <Input type="number" value={f.laize_papier} onChange={v => set('laize_papier', v)} />
             </Field>
+            <Field label="Nombre de passage" style={{ minWidth: 120 }}>
+              <Input type="number" value={f.nb_passages} onChange={v => set('nb_passages', v)} />
+            </Field>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <label style={{ fontSize: 11, fontWeight: 'bold', color: '#444' }}>Longueur après coating</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Input type="number" value={f.longueur_coating} onChange={v => set('longueur_coating', v)} style={{ width: 80 }} />
+                <span style={{ fontSize: 12, color: '#444' }}>cm</span>
+              </div>
+            </div>
             <div>
               <div style={{ fontSize: 11, fontWeight: 'bold', color: '#444', marginBottom: 4 }}>{t.finition}</div>
               <div style={{ display: 'flex', gap: 12 }}>
