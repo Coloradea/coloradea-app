@@ -192,7 +192,7 @@ function initState() {
     bande_peinture_blanche: false, bande_vernis_transparent: false, bande_sans: false,
     papier_fin_mat: false, papier_fin_satin: false, papier_fin_brillant: false,
     degre_brillance: '', contretypage_xml: false, contretypage_std: false,
-    formats_couleurs: Array(8).fill(null).map(() => ({ l: '', h: '', nb: '', teintes_page: '', pages: '' })),
+    formats_couleurs: Array(8).fill(null).map(() => ({ l: '', h: '', nb: '', kg_couleur: '' })),
     notes_labo: '', papier_coating: '', laize_papier: '',
     coat_fin_mat: false, coat_fin_satin: false, coat_fin_brillant: false,
     nouvel_outil: false, outil_existant: '',
@@ -227,7 +227,7 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
       const parsed = { ...data }
       if (typeof parsed.formats_couleurs === 'string') parsed.formats_couleurs = JSON.parse(parsed.formats_couleurs)
       if (Array.isArray(parsed.formats_couleurs)) {
-        while (parsed.formats_couleurs.length < 8) parsed.formats_couleurs.push({ l: '', h: '', nb: '', teintes_page: '', pages: '' })
+        while (parsed.formats_couleurs.length < 8) parsed.formats_couleurs.push({ l: '', h: '', nb: '', kg_couleur: '' })
         parsed.formats_couleurs = parsed.formats_couleurs.slice(0, 8)
       }
       if (typeof parsed.coating_lignes === 'string') parsed.coating_lignes = JSON.parse(parsed.coating_lignes)
@@ -482,21 +482,10 @@ export default function FicheForm({ ficheId, onBack, onSaved }) {
                     onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], nb: v}; set('formats_couleurs', arr) }} />
                   <span style={{ fontSize: 10, color: '#888' }}>{t.teintes || 'teintes'}</span>
                 </div>
-                <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 4 }}>
-                  <Input type="number" value={fc.teintes_page} placeholder="nb" style={{ width: 40 }}
-                    onChange={v => {
-                      const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], teintes_page: v}; set('formats_couleurs', arr)
-                      const cl = [...f.coating_lignes]; cl[i] = {...cl[i], nb_coul: v}; set('coating_lignes', cl)
-                    }} />
-                  <span style={{ fontSize: 10, color: '#888' }}>{t.teintes_par_page || 'teintes par page'}</span>
-                </div>
                 <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-                  <Input type="number" value={fc.pages} placeholder="nb" style={{ width: 40 }}
-                    onChange={v => {
-                      const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], pages: v}; set('formats_couleurs', arr)
-                      const cl = [...f.coating_lignes]; cl[i] = {...cl[i], nb_pages: v}; set('coating_lignes', cl)
-                    }} />
-                  <span style={{ fontSize: 10, color: '#888' }}>{t.pages_couleur || 'pages couleur'}</span>
+                  <Input type="number" value={fc.kg_couleur} placeholder="0.0" style={{ width: 50 }}
+                    onChange={v => { const arr = [...f.formats_couleurs]; arr[i] = {...arr[i], kg_couleur: v}; set('formats_couleurs', arr) }} />
+                  <span style={{ fontSize: 10, color: '#888' }}>Kg/couleur</span>
                 </div>
               </div>
             ))}
