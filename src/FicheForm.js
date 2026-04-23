@@ -110,8 +110,9 @@ function ImprimerieBloc({ title, data, onChange, hasPrestataire = true, hasCouve
                 </div>
               </Field>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 10, marginTop: 8 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '200px 200px 1fr', gap: 10, marginTop: 8 }}>
               <Field label={t.nb_pages}><Input type="number" value={data.nb_pages} onChange={v => set('nb_pages', v)} /></Field>
+              <Field label="Nb de passage par couleur"><Input type="number" value={data.nb_passages_couleur} onChange={v => set('nb_passages_couleur', v)} /></Field>
               <Field label={t.impression}>
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 4 }}>
                   <Check label={t.recto_sur_teinte || 'Recto sur la teinte'} checked={data.imp_recto_sur} onChange={v => set('imp_recto_sur', v)} />
