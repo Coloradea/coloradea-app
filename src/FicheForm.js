@@ -111,7 +111,7 @@ function ImprimerieBloc({ title, data, onChange, hasPrestataire = true, hasCouve
               </Field>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '200px 200px 1fr', gap: 10, marginTop: 8 }}>
-              <Field label={t.nb_pages}><Input type="number" value={data.nb_pages} onChange={v => set('nb_pages', v)} /></Field>
+              <Field label="Nombre de pages couleur"><Input type="number" value={data.nb_pages} onChange={v => set('nb_pages', v)} /></Field>
               <Field label="Nb de passage par couleur"><Input type="number" value={data.nb_passages_couleur} onChange={v => set('nb_passages_couleur', v)} /></Field>
               <Field label={t.impression}>
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 4 }}>
@@ -124,7 +124,7 @@ function ImprimerieBloc({ title, data, onChange, hasPrestataire = true, hasCouve
                 </div>
               </Field>
             </div>
-            <Field label={t.couleur} style={{ marginTop: 8 }}>
+            <Field label="Couleur d'impression" style={{ marginTop: 8 }}>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', paddingTop: 4 }}>
                 <Check label={t.noir} checked={data.coul_noir} onChange={v => set('coul_noir', v)} />
                 <Check label={t.noir_alu} checked={data.coul_noir_alu} onChange={v => set('coul_noir_alu', v)} />
